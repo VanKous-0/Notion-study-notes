@@ -759,4 +759,87 @@ void dequeue(Queue* q, ElemType* e) {
 
 **性质一：**树中所有结点数等于所有结点的度数之和加1（通俗讲就是圆=线+1）
 
+**性质二：**对于度为m的树，第i层上最多有m^(i-1)个结点
+
 ![image.png](image%203.png)
+
+### 二叉树
+
+每个结点最多2个度
+
+第i层最多有2^(i-1)个结点
+
+深度为k的二叉树最多有2^i-1个结点
+
+对于任何非空的二叉树T，如果叶子结点的个数为n0，而度为2的结点数为n2，则n0=n2+1
+
+**满二叉树：**结点都在的二叉树
+
+**完全二叉树：**缺少一部分右结点的满二叉树。
+
+没有左子树，不能有右子树，上一层没铺满，不能有下一层
+
+### 链表实现二叉树
+
+```c
+typedef char ElemType;
+typedef struct treenode {
+	ElemType data;
+	struct treenode* leftchild;
+	struct treenode* rightchild;
+}TreeNode;
+typedef TreeNode* BiTree;
+char str[] = "ABDH K   E  CFI   G J  ";
+int idx = 0;
+//因为是void,所以要用引用传递，故用双重指针
+void createTree(BiTree *T) {
+	ElemType ch;
+	ch = str[idx++];
+	if (ch == ' ') {
+		*T = NULL;
+	}
+	else {
+		*T = (TreeNode*)malloc(sizeof(TreeNode));
+		(*T)->data = ch;
+		createTree(&((*T)->leftchild));
+		createTree(&((*T)->rightchild));
+	}
+}
+//前序遍历
+void preOrder(BiTree T) {
+	if (T == NULL) {
+		return;
+	}
+	printf("%c", T->data);
+	preOrder(T->leftchild);
+	preOrder(T->rightchild);
+}
+//中序遍历
+void inOrder(BiTree T) {
+	if (T == NULL) {
+		return;
+	}
+	inOrder(T->leftchild);
+	printf("%c", T->data);
+	inOrder(T->rightchild);
+}
+//后序遍历
+void postOrder(BiTree T) {
+	if (T == NULL) {
+		return;
+	}
+	postOrder(T->leftchild);
+	postOrder(T->rightchild);
+	printf("%c", T->data);
+}
+```
+
+**1.左永远在右前：**无论哪种遍历，**左子树**永远比**右子树**先遍历
+
+**2.名字只看根：**“前、中、后”指的仅仅是根节点被访问的时机
+
+| **遍历名称** | **规律口诀** | **顺序结构** |
+| --- | --- | --- |
+| **前**序 (Pre) | **根**在前 | **根** → 左 → 右 |
+| **中**序 (In) | **根**在中间 | 左 → **根** → 右 |
+| **后**序 (Post) | **根**在后 | 左 → 右 → **根** |
