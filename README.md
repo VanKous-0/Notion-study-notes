@@ -7,6 +7,7 @@
 - [计算机导论](./计算机导论/)
 - [数据结构](./数据结构/)
 - [Markdown](.//Markdown(VScode版)/)
+- [Java-learning](./Java-learning/)
 
 （后续会逐步加入更多课程笔记）
 
